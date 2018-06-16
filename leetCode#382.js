@@ -1,30 +1,53 @@
 let linkedlist = require('./myfunc.linklist');
 let LinkedList = linkedlist.LinkedList;
+let linkList = new LinkedList;
+linkList.add(1);
+let lead;
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param head The linked list's head.
+        Note that the head is guaranteed to be not null, so it contains at least one node.
+ * @param {ListNode} head
+ */
+var Solution = function (head) {
+  lead = head;
+};
 
-let list = new LinkedList;
-list.add(1,2,3,4,5,7,8,9);
-
-// console.log(list.head);
-// while(list.head !== null) {
-//   console.log(list.head.val);
-//   list.head = list.head.next;
-// }
-let length = 0;
-let currentNodePTR = list.head;
-let randomNum;
-while (currentNodePTR !== null) {
-  length++;
-  currentNodePTR = currentNodePTR.next;
-}
-randomNum = Math.ceil(Math.random()*length);
-console.log("random", randomNum);
-for (let i = 0; i < randomNum; i++) {
-  console.log(list.head.val);
-  if(i === randomNum -1 ) {
-    console.log("last Node", list.head.val);
-    return list.head.val;
+/**
+ * Returns a random node's value.
+ * @return {number}
+ */
+Solution.prototype.getRandom = function (head, k) {
+  const reservoir = new Array(k);
+  for (let i = 0, ptr = lead; ptr !== null; i++) {
+    Solution.prototype.stream(i, ptr, reservoir);
+    ptr = ptr.next;
   }
-  list.head = list.head.next;
-}
+  return reservoir[0];
+};
 
-
+Solution.prototype.stream = function (n, input, reservoir) {
+  if (n < reservoir.length) {
+    reservoir[n] = input.val;
+  } else {
+    const r = Solution.prototype.randomIntInRange(0, n, true);
+    if (r < reservoir.length) {
+      reservoir[r] = input.val;
+    }
+  }
+};
+Solution.prototype.randomIntInRange = function (min, max, inclusive) {
+  const range = (max - min) + ((inclusive) ? 1 : 0);
+  return Math.trunc(Math.random() * range + min);
+};
+/**
+ * Your Solution object will be instantiated and called as such:
+ * var obj = Object.create(Solution).createNew(head)
+ * var param_1 = obj.getRandom()
+ */
