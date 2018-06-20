@@ -1,57 +1,84 @@
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} root
- * @param {number} k
- * @return {ListNode[]}
- */
-function ListNode(val) {
-  this.val = val;
-  this.next = null;
- }
- let root = new ListNode(1);
- root.next = new ListNode(2);
- root.next.next = new ListNode(3);
- root.next.next.next = new ListNode(4);
- root.next.next.next.next = new ListNode(5);
-k = 2;
 
-var splitListToParts = function (root, k) {
-  if (!root) {
-    return root;
+// https://leetcode.com/problems/split-linked-list-in-parts/description/
+// given an linked list 1->2->3->4->5
+// split the list into k parts with equal elements
+
+// if k = 3, [1->2][3->4][5]
+// if k = 4, [1->2][3][4][5]
+// if k = 6, [1][2][3][4][5][]
+
+
+
+// n % k !== 0, there will always be one extra so add in first list
+
+
+// n % k === 0, evenly distributed
+// n / k = equalCount
+// while currentPtr exists
+// keep prevPtr and currentPtr
+// add currentPtr to results
+// iterate eqCount times
+// cut
+// prev.next = null
+// prev = null
+
+class Node {
+  constructor(value) {
+    this.next = null;
+    this.value = value;
   }
+}
 
-  //set variables
-  let current = root;
+function getLength(node) {
+  let currentPtr = node;
   let length = 0;
-  //get the length of root
-  while (current) {
+  while (currentPtr) {
     length++;
-    current = current.next;
+    currentPtr = currentPtr.next;
   }
-  let group = length / k;
-  current = root;
-  //go through root k times
-  for (let i = 0; i < k; i++) {
-    if (group !== parseInt(group, 10)) {
-      group = parseInt(group, 10);
-      current = current.next;
-    }
-    for (let j = 0; j < group; j++) {
-      if (group - 1 === j) {
-        let temp = current.next;
-        current.next = null;
-        current = temp;
+  return length;
+}
+
+
+// if k = 3, [1->2][3->4][5] eqCount = 6/3 = 2
+function splitLL(node, k) {
+  const results = [];
+  const length = getLength(node);
+  const eqCount = Math.floor(length / k);
+  let modCounter = length % k;
+
+  let prevPtr = null;
+  let currentPtr = node;
+  let counter = 0;
+  while (currentPtr) {
+    if (counter === 0) {
+      results.push(currentPtr);
+      // cut
+      if (prevPtr) {
+        prevPtr.next = null;
       }
-      current = current.next;
+      counter = eqCount;
+      if (modCounter > 0) {
+        counter += 1;
+        modCounter -= 1;
+      }
+    } else {
+      prevPtr = currentPtr;
+      currentPtr = currentPtr.next;
+      counter--;
     }
   }
-  //go through root group times
-  
-};
-splitListToParts(root,k);
+  if (k > length) {
+    for (let i = 0; i < k - length; i += 1) {
+      results.push(null);
+    }
+  }
+  return results;
+}
+const l = new Node(1);
+l.next = new Node(2);
+l.next.next = new Node(3);
+l.next.next.next = new Node(4);
+l.next.next.next.next = new Node(5);
+
+splitLL(l, 10);
