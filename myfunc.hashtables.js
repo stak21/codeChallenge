@@ -15,6 +15,9 @@ module.exports = class HashTable {
   makeHash(str) {
     let hash = 0;
     const { limit } = this;
+    if (typeof str === typeof {}) {
+      str = `str + ${'A'.charCodeAt(0) ** str.value}`;
+    }
     for (var i = 0; i < str.length; i += 1) {
       hash += str.charCodeAt(i);
     }
@@ -23,6 +26,14 @@ module.exports = class HashTable {
   addToBucket(key, value) {
     var { storage } = this;
     const index = this.makeHash(key);
+    if (typeof key === typeof {}) {
+      const { value: objValue } = key;
+      if (!objValue) {
+        return 0;
+      } else {
+        value = objValue;
+      }
+    }
     if (storage[index] === undefined) {
       storage[index] = [[key, value]];
     } else {
@@ -65,6 +76,9 @@ module.exports = class HashTable {
     if (storage[index] === undefined) {
       return console.error(`The key '${key}' was not found`);
     } else if (storage[index].length === 1 && storage[index][0][0] === key) {
+      if (typeof key === typeof {}) {
+        return storage[index][0][0];
+      }
       return storage[index][0][1];
     } else {
       var found = false;

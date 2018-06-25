@@ -30,6 +30,7 @@ module.exports = class LinkedList {
       }
       current.next = newNode;
     }
+    this.length += 1;
   }
   //when using addNodes, either add a value or an obj(key:value) ex: 5 or { key: key, value: value}
   addNodes(...obj) {
