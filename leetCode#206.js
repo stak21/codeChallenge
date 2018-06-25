@@ -14,18 +14,26 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function(head) {
-     if(head === null) {
-         return head;
-     }
-     var tail = head;
-     var next = head.next;
-     while(tail.next !== null) {
-       tail.next = next.next;
-       next.next = head;
-       head = next;
-       next = tail.next;
-     }
-     return head;
- };
- 
+
+const LinkedList = require('./myfunc.linklist');
+
+const list = new LinkedList();
+list.addNodes(1, 2, 3, 4, 5);
+const listHead = list.head;
+
+var reverseList = function (head) {
+  if (head === null) {
+    return head;
+  }
+  var tail = head;
+  let { next: following } = head;
+  while (tail.next !== null) {
+    tail.next = following.next;
+    following.next = head;
+    head = following;
+    following = tail.next;
+  }
+  return head;
+};
+
+console.log(reverseList(listHead));

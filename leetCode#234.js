@@ -1,10 +1,10 @@
 
 
-//Definition for singly-linked list.
-function ListNode(val) {
-  this.val = val;
-  this.next = null;
-}
+// //Definition for singly-linked list.
+// function ListNode(val) {
+//   this.val = val;
+//   this.next = null;
+// }
 
 /**
  * @param {ListNode} head
@@ -18,33 +18,35 @@ function ListNode(val) {
 
 //POA: Find the middle of the node, then rearrange the 2nd half backwards
 //then compare head to the rearranged list
+
+const LinkedList = require('./myfunc.linklist');
+
 var reverseList = function (slowNodePTR) {
   var tempSlow = slowNodePTR;
   if (tempSlow === null) {
     return tempSlow;
   }
   var tail = tempSlow;
-  var next = tempSlow.next;
+  let { next: following } = tempSlow;
   while (tail.next !== null) {
-    tail.next = next.next;
-    next.next = tempSlow;
-    tempSlow = next;
-    next = tail.next;
+    tail.next = following.next;
+    following.next = tempSlow;
+    tempSlow = following;
+    following = tail.next;
   }
   return tempSlow;
 };
-var isPalindrome = function (head) {
-  //set variables- slow, fast and middle to head
-  let slowNodePTR = head;
-  let fastNodePTR = head;
+var isPalindrome = function (link) {
+  //set variables- slow, fast and middle to link
+  let slowNodePTR = link.head;
+  let fastNodePTR = link.head;
   let reversedList = null;
-  let moveSlow = 1
-  ;
+  let moveSlow = 1;
 
   //initial check
-  //head EQ null
+  //link EQ null
   //return true;
-  if (head === null) {
+  if (link === null) {
     return true;
   }
   //while slow !EQ null
@@ -71,14 +73,14 @@ var isPalindrome = function (head) {
     }
     //if reversedList
     if (reversedList) {
-      //then if head !EQ slow
-      if (head.val !== slowNodePTR.val) {
+      //then if link !EQ slow
+      if (link.head.value !== slowNodePTR.value) {
         //return false;
         return false;
       } else {
-        //else move head to next
+        //else move link to next
         //      move slow to next
-        head = head.next;
+        link.head = link.head.next;
         slowNodePTR = slowNodePTR.next;
       }
     }
@@ -87,9 +89,7 @@ var isPalindrome = function (head) {
   //return true;
   return true;
 };
-var head = new ListNode(1);
-head.next = new ListNode(1);
-head.next.next = new ListNode(2);
-head.next.next.next = new ListNode(1);
+const list = new LinkedList();
+list.addNodes(1, 2, 2, 1, 2);
 
-console.log(isPalindrome(head));
+console.log(isPalindrome(list));

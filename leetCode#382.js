@@ -1,7 +1,7 @@
-let linkedlist = require('./myfunc.linklist');
-let LinkedList = linkedlist.LinkedList;
-let linkList = new LinkedList;
-linkList.add(1);
+const LinkedList = require('./myfunc.linklist');
+
+const linkList = new LinkedList();
+linkList.addNodes(1);
 let lead;
 /**
  * Definition for singly-linked list.

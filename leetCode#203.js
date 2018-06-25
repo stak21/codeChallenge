@@ -1,6 +1,6 @@
 /**
  * Definition for singly-linked list.
- * function ListNode(val) {
+ * function ListNode(value) {
  *     this.val = val;
  *     this.next = null;
  * }
@@ -10,36 +10,40 @@
  * @param {number} val
  * @return {ListNode}
  */
-var removeElements = function(head, val) {
-  currentNodePTR = head;
+const LinkedList = require('./myfunc.linklist');
+
+var removeElements = function (link, value) {
+  let currentNodePTR = link.head;
   //removeNode function
-  let removeNode = () => {
-    let temp = currentNodePTR.next;
+  const removeNode = () => {
+    const temp = currentNodePTR.next;
     currentNodePTR.next = temp.next;
     temp.next = null;
-  }
+  };
   //pre-check
-  if (head === null) {
-    return head;
-  }
-  else if (val === null) {
-    return head;
+  if (link.head === null) {
+    return link.head;
+  } else if (value === null) {
+    return link.head;
   }
   //main loop
   while (currentNodePTR !== null) {
-    if (head.val === val) {
-      head = head.next;
-      currentNodePTR = head;
-    }
-    else if (currentNodePTR.next === null) {
-      return head;
-    }
-    else if (currentNodePTR.next.val === val) {
-        removeNode();
-    }
-    else {
+    if (link.head.value === value) {
+      link.head = link.head.next;
+      currentNodePTR = link.head;
+    } else if (currentNodePTR.next === null) {
+      return link.head;
+    } else if (currentNodePTR.next.value === value) {
+      removeNode();
+    } else {
       currentNodePTR = currentNodePTR.next;
     }
   }
-    return head;
+  return link.head;
 };
+
+const list = new LinkedList();
+list.addNodes(1, 2, 3);
+removeElements(list, 1);
+removeElements(list, 2);
+removeElements(list, 3);

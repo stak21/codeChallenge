@@ -6,9 +6,6 @@
 // if k = 3, [1->2][3->4][5]
 // if k = 4, [1->2][3][4][5]
 // if k = 6, [1][2][3][4][5][]
-
-
-
 // n % k !== 0, there will always be one extra so add in first list
 
 

@@ -1,42 +1,62 @@
-
-let head;
-let node;
-let length_;
-let currentNodePTR_;
-function LinkedList() {
-  this.next = null;
-  this.head = null;
-  this.singleAdd = function (val) {
-    if (this.val === undefined) {
-    this.val = val;
-    this.next = null;
-    this.head = this;
-    } else {
-      const node = {val};
-      currentNodePTR_ = this.head;
-      while (currentNodePTR_.next !== null) {
-        currentNodePTR_ = currentNodePTR_.next;
-      }
-      currentNodePTR_.next = node;
-      node.next = null;
+//
+// to use:
+// const LinkedList = require('./myfunc.linklist');
+// to add:
+// node.addNodes(1, { key: 'dog', value: 'shiba' });
+//
+module.exports = class LinkedList {
+  constructor(value) {
+    if (value) {
+      console.log('This only creates the list, try adding nodes separately with .addNodes');
     }
-      length_++;
+    this.head = null;
+    this.count = 0;
+    this.length = 0;
   }
-  this.add = function (...values) {
-    values.forEach( val => {
-       this.singleAdd(val);
-      });
-      return this;
+  _singleAddNode(obj) {
+    let newNode = { };
+    if (obj.key && obj.value) {
+      newNode = { key: obj.key, value: obj.value };
+    } else {
+      newNode = { value: obj };
+    }
+    newNode.next = null;
+    if (this.head === null) {
+      this.head = newNode;
+    } else {
+      let current = this.head;
+      while (current.next !== null) {
+        current = current.next;
+      }
+      current.next = newNode;
+    }
   }
-  this.logList = function (head) {
-    while(head != null) {
-      console.log(head.val);
+  //when using addNodes, either add a value or an obj(key:value) ex: 5 or { key: key, value: value}
+  addNodes(...obj) {
+    obj.forEach(value => this._singleAddNode(value));
+    return this;
+  }
+  addLinkedList(obj) {
+    if (this.head === null) {
+      this.head = obj;
+    } else {
+      let current = this.head;
+      while (current.next !== null) {
+        current = current.next;
+      }
+      current.next = obj;
+    }
+  }
+  logList() {
+    let { head } = this;
+    while (head != null) {
+      if (head.key && head.value) {
+        console.log(`${head.key}: ${head.value}`);
+      } else {
+        console.log(head.value);
+      }
       head = head.next;
     }
     return 0;
   }
-}
-
-module.exports = {
-  LinkedList: LinkedList
-}
+};

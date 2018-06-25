@@ -1,31 +1,23 @@
 
 //Definition for singly-linked list.
-function ListNode(val) {
-  this.val = val;
-  this.next = null;
-} 
-var head = new ListNode(1);
-head.next = new ListNode(2);
-head.next.next = new ListNode(3);
-head.next.next.next = new ListNode(4);
+const LinkedList = require('./myfunc.linklist');
 
-const G = [3,4];
 /*
  * @param {ListNode} head
  * @param {number[]} G
  * @return {number}
  */
-var numComponents = function (head, G) {
+var numComponents = function (link, G) {
   let match = false;
   let consecutive = false;
   let count = 0;
-  while (head !== null) {
+  while (link.head !== null) {
     for (let i = 0; i < G.length; i++) {
-      if (head.val === G[i] && consecutive === false) {
+      if (link.head.value === G[i] && consecutive === false) {
         count++;
         consecutive = true;
         match = true;
-      } else if (head.val === G[i]) {
+      } else if (link.head.value === G[i]) {
         consecutive = true;
         match = true;
       }
@@ -34,10 +26,12 @@ var numComponents = function (head, G) {
         consecutive = false;
       }
     }
-    head = head.next;
+    link.head = link.head.next;
     match = false;
   }
   return count;
 };
-
-console.log(numComponents(head, G));
+const G = [3, 4];
+const list = new LinkedList();
+list.addNodes(3, 4);
+console.log(numComponents(list, G));
