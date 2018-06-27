@@ -48,6 +48,7 @@ module.exports = class HashTable {
         storage[index].push([key, value]);
       }
     }
+    return 0;
   }
   removeFromBucket(key) {
     var { storage } = this;
