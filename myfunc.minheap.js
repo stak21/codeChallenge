@@ -67,65 +67,102 @@ class MinHeap {
     // if the parentvalue is > than the new item, heapify up
     // if the parentvalue is < and the child exists, then heapify down
     const numberOfItem = this.find(item).length;
+
     for (let itemIndex = 0; itemIndex < numberOfItem; itemIndex += 1) {
-      let indexToRemove = this.find(item).pop();
+      const indexToRemove = this.find(item).pop();
       if (indexToRemove === (this.container.length - 1)) {
         this.container.pop();
       } else {
         this.container[indexToRemove] = this.container.pop();
-        let parent = this.getParent(indexToRemove);
-        let leftChild = this.getLeftChild(indexToRemove);
-        if (this.container[indexToRemove] > parent &&
-          (leftChild !== null && leftChild < this.container[indexToRemove])) {
+
+        // Get parent and child
+        const parent = this.getParent(indexToRemove);
+        const leftChild = this.getLeftChild(indexToRemove);
+
+        // If there is a left Child and node is greater than parent and leftchild, otherwise heapify up.
+        if (
+          leftChild !== null &&
+          (
+            parent === null ||
+            parent < this.container[indexToRemove]
+          )
+        ) {
           this.heapifyDown(indexToRemove);
         } else {
           this.heapifyUp(indexToRemove);
         }
       }
     }
+
+    return this;
   }
+
   find(item) {
     // iterate through the C and if any of the items in C is EQ to item, store that index in an array
     const numberOfItem = [];
+
     for (let itemIndex = 0; itemIndex < this.container.length; itemIndex += 1) {
       if (this.container[itemIndex] === item) {
         numberOfItem.push(itemIndex);
       }
     }
+
     return numberOfItem;
   }
+
   heapifyUp(customIndexStart) {
+    //custom index or the last element in the array
     let currentIndex = customIndexStart || (this.container.length - 1);
+
     // compare currentindex with the parent, if < ? swap : break
-    while (this.hasParent(currentIndex) && this.container[currentIndex] < this.getParent(currentIndex)) {
+    while (
+      this.hasParent(currentIndex) &&
+      this.container[currentIndex] < this.getParent(currentIndex)
+    ) {
       this.swap(this.getParentIndex(currentIndex), currentIndex);
       currentIndex = this.getParentIndex(currentIndex);
     }
   }
+
   heapifyDown(customIndexStart) {
+    //custom index or the last element in the array
     let currentIndex = customIndexStart || this.container[this.container.length - 1];
     let nextIndex = null;
+
     //while leftchild exists
     //if rightChild exists
     //set nextIndex to whicever child is smaller index
     //if this value is < the nextindex value ? stop
     //swap and set current index to next index
-    while (this.hasLeftChild(currentIndex) != null) {
-      if (this.hasRightChild(currentIndex)) {
-        if (this.getLeftChild(currentIndex) < this.getRightChild(currentIndex)) {
-          nextIndex = this.getLeftChildIndex(currentIndex);
-        } else {
-          nextIndex = this.getRightChild(currentIndex);
-        }
-        if (this.container[currentIndex] < this.container[nextIndex]) {
-          break;
-        }
-        this.swap(currentIndex, nextIndex);
-        currentIndex = nextIndex;
+
+    while (this.hasLeftChild(currentIndex)) {
+      if (
+        this.hasRightChild(currentIndex) &&
+        this.getLeftChild(currentIndex) < this.getRightChild(currentIndex)
+      ) {
+        nextIndex = this.getLeftChildIndex(currentIndex);
+      } else {
+        nextIndex = this.getRightChild(currentIndex);
       }
+
+      if (this.container[currentIndex] < this.container[nextIndex]) {
+        break;
+      }
+
+      this.swap(currentIndex, nextIndex);
+      currentIndex = nextIndex;
     }
   }
+
+  isEmpty() {
+    return !this.container.length;
+  }
+
+  toString() {
+    return this.container.toString();
+  }
 }
+
 const heap = new MinHeap();
 heap.add(1);
 heap.add(2);
