@@ -15,170 +15,10 @@
 //Linked list implementation
 //create a constructor, Append, prepend, Remove, search, removeHead, removeTail
 ////
-//linkedlist unnecessary
-// class LinkedListNode {
-//   constructor(value, next = null) {
-//     this.value = value;
-//     this.next = next;
-//   }
 
-//   toString(callback) {
-//     return callback ? callback(this.value) : `${this.value}`;
-//   }
-// }
-// class LinkedList {
-//   constructor(...values) {
-//     this.head = null;
-//     this.tail = null;
-//     this.append(...values);
-//   }
-
-//   append(...val) {
-//     val.forEach(value =>
-//       this.appendSingles(value));
-//     return this;
-//   }
-//   appendSingles(value) {
-//     const newNode = new LinkedListNode(value);
-
-//     if (this.head === null) {
-//       this.head = newNode;
-//       this.tail = newNode;
-
-//       return this;
-//     }
-
-//     this.tail.next = newNode;
-//     this.tail = newNode;
-
-//     return this;
-//   }
-//   prepend(value) {
-//     //set newNode.next to head, set this.head to newNode and if there is no tail, then set it to newNode
-//     const newNode = new LinkedListNode(value, this.head);
-//     this.head = newNode;
-//     if (this.tail === null) {
-//       this.tail = newNode;
-//     }
-
-//     return this;
-//   }
-//   remove(value) {
-//   //iterate through the LinkedList looking for the value, once found, set currentNode.next to currentNode.next.next
-//   // check if tail was deleted ? set tail to currentNode : nothing
-//     if (this.head === null) {
-//       return null;
-//     }
-
-//     let deletedNode = null;
-
-//     // while the head EQ the value then set head to next value
-//     while (this.head && this.head.value === value) {
-//       deletedNode = this.head;
-//       this.head = this.head.next;
-//     }
-
-//     let currentNode = this.head;
-
-//     //if currentNode exists, iterate through the LL and remove any node EQ value
-//     if (currentNode !== null) {
-//       while (currentNode.next !== null) {
-//         if (currentNode.next.value === value) {
-//           deletedNode = currentNode.next;
-//           currentNode.next = currentNode.next.next;
-//         } else {
-//           currentNode = currentNode.next;
-//         }
-//       }
-//     }
-
-//     // check if tail was removed
-//     if (this.tail.value === value) {
-//       this.tail = currentNode;
-//     }
-//     return deletedNode;
-//   }
-//   search(value) {
-//     if (this.head === null) {
-//       return null;
-//     }
-
-//     let currentNode = this.head;
-
-//     while (currentNode !== null) {
-//       if (currentNode.value === value) {
-//         return currentNode;
-//       }
-//       currentNode = currentNode.next;
-//     }
-//     return null;
-//   }
-//   removeHead() {
-//     if (this.head === null) {
-//       return null;
-//     }
-
-//     const deletedNode = this.head;
-
-//     if (this.head.next !== null) {
-//       this.head = this.head.next;
-//     } else {
-//       this.head = null;
-//       this.tail = null;
-//     }
-//     return deletedNode;
-//   }
-//   removeTail() {
-//     //check if there is only one node in the list ? set head & tail to null and return deletedTail
-//     // go to the node before the tail and set its next to null and set tail to current & return deletedtail
-
-//     if (this.head === this.tail) {
-//       const deletedTail = this.tail;
-//       this.head = null;
-//       this.tail = null;
-
-//       return deletedTail;
-//     }
-
-//     const deletedTail = this.tail;
-
-//     // Rewind to the last node and delete "next" link for the node before the last one.
-//     let currentNode = this.head;
-//     while (currentNode.next) {
-//       if (!currentNode.next.next) {
-//         currentNode.next = null;
-//       } else {
-//         currentNode = currentNode.next;
-//       }
-//     }
-//     this.tail = currentNode;
-//     return deletedTail;
-//   }
-// }
 // Queue implementation
 //create a enqueue, dequeue, peek, isempty
-class Queue {
-  constructor(...values) {
-    this.linkedList = new LinkedList(...values);
-  }
-  enqueue(value) {
-    this.linkedList.appendSingles(value);
-  }
-  dequeue() {
-    const removeHead = this.linkedList.removeHead();
-    return removeHead ? removeHead.value : null;
-  }
-  peek() {
-    if (this.linkedList.head === null) {
-      return null;
-    } else {
-      return this.linkedList.head.value;
-    }
-  }
-  isEmpty() {
-    return !this.linkedList.tail;
-  }
-}
+const Queue = require('../myfunc/myfunc.queue');
 
 //implement a tree
 class BinaryTreeNode {
@@ -187,10 +27,8 @@ class BinaryTreeNode {
     this.left = null;
     this.right = null;
     this.value = value;
-
     //can also include a meta using a hash
   }
-
   //getter methods height, leftheight, rightheight, balancefactor, uncle
 
   get leftHeight() {

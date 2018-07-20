@@ -41,6 +41,10 @@ module.exports = class HashTable {
       for (let i = 0; i < storage[index].length; i += 1) {
         if (storage[index][i][0] === key) {
           storage[index][i][1] = value;
+          if (storage[index][i][2] === undefined) {
+            storage[index][i][2] = 1;
+          }
+          storage[index][i][2] += 1;
           inserted = true;
         }
       }
@@ -50,18 +54,41 @@ module.exports = class HashTable {
     }
     return 0;
   }
+  getMultipleCount(key) {
+    var { storage } = this;
+    const index = this.makeHash(key);
+    if (storage[index] === undefined) {
+      return console.error(`The key '${key}' was not found`);
+    }
+    for (let i = 0; i < storage[index].length; i += 1) {
+      if (storage[index][i][0] === key) {
+        return storage[index][i][2];
+      }
+    }
+    //if it comes to this point, then it was not found
+    return console.error(`The key '${key}' was not found`);
+  }
+
   removeFromBucket(key) {
     var { storage } = this;
     const index = this.makeHash(key);
     if (storage[index] === undefined) {
       return console.error(`The key '${key}' was not found`);
     } else if (storage[index].length === 1 && storage[index][0][0] === key) {
-      storage[index].splice(0, 1);
+      if (storage[index][0][2] <= 1 || storage[index][0][2] === undefined) {
+        storage[index].splice(0, 1);
+      } else {
+        storage[index][0][2] -= 1;
+      }
     } else {
       var found = false;
       for (let i = 0; i < storage[index].length; i += 1) {
         if (storage[index][i][0] === key) {
-          storage[index].splice(i, 1);
+          if (storage[index][i][2] <= 1) {
+            storage[index].splice(i, 1);
+          } else {
+            storage[index][i][2] -= 1;
+          }
           found = true;
         }
       }
