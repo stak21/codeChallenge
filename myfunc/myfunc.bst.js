@@ -128,3 +128,15 @@ newNodeTest.find(6);
 newNodeTest.remove(6);
 newNodeTest.remove(5);
 newNodeTest.insert(5);
+
+const newNode2 = new BinarySearchTreeNode(5);
+newNode2.insert(6);
+newNode2.insert(7);
+newNode2.insert(17);
+newNode2.insert(16);
+newNode2.insert(150);
+newNode2.find(150);
+newNode2.insert(160);
+newNode2.insert(140);
+newNode2.insert(155);
+newNode2.remove(150);
