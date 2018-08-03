@@ -15,18 +15,10 @@ const LinkedList = require("../myfunc/myfunc.linklist");
 var middleNode = function (head) {
   let fast = head;
   let slow = head;
-  let odd = true;
 
-  while (fast.next !== null) {
-    if (odd === true) {
-      odd = false;
-    } else {
-      odd = true;
-    }
-    fast = fast.next;
-    if (odd === false) {
-      slow = slow.next;
-    }
+  while (fast !== null && fast.next !== null) {
+    fast = fast.next.next;
+    slow = slow.next;
   }
 
   return slow;
