@@ -22,8 +22,6 @@ const createHashKeys = (input) => {
     closing.addToBucket(item[1], item[2]);
   });
 };
-
-const hash = new Hash();
 const markUpString = (s) => {
   var final = '';
 
@@ -32,9 +30,7 @@ const markUpString = (s) => {
     if (opening.lookUpInBucket(i)) {
       final += `<${opening.lookUpInBucket(i)}>${s[i]}`;
       s1.push(opening.lookUpInBucket(i));
-    }
-    //close
-    else if (closing.lookUpInBucket(i)) {
+    } else if (closing.lookUpInBucket(i)) { //closing
       while (p !== closing.lookUpInBucket(i)) {
         p = s1.pop();
         if (p !== closing.lookUpInBucket(i)) {
@@ -43,13 +39,13 @@ const markUpString = (s) => {
         final += `</${p}>`;
       }
       while (s2.length) {
-        let tmp = s2.pop();
+        const tmp = s2.pop();
         s1.push(tmp);
         final += `<${tmp}>`;
       }
       final += s[i];
     } else {
-      final += s[i];
+      final += s[i];.
     }
   }
   return final;

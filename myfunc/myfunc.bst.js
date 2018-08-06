@@ -129,7 +129,7 @@ const BinaryTreeNode = require('/Users/shoji/git/datastruc/javascript-algorithms
 // newNodeTest.remove(5);
 // newNodeTest.insert(5);
 
-class BinarySearchTreeNodes extends BinaryTreeNode {
+module.exports = class BinarySearchTreeNodes extends BinaryTreeNode {
   constructor(value = null) {
     super(value);
   }
@@ -222,16 +222,6 @@ class BinarySearchTreeNodes extends BinaryTreeNode {
     if (!this.left) {
       return this;
     }
-    this.left.findMin();
+    return this.left.findMin();
   }
-}
-const newNode = new BinarySearchTreeNodes(5);
-newNode.insert(6);
-newNode.insert(7);
-newNode.insert(17);
-newNode.insert(16);
-newNode.insert(150);
-newNode.lookUp(150);
-newNode.insert(160);
-newNode
-newNode.remove(150);
+};
