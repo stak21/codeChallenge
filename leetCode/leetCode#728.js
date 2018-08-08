@@ -10,7 +10,7 @@ var divMod = (left) => {
 var selfDividingNumbers = function (left, right) {
   const final = [];
   for (left; left <= right; left += 1) {
-    let num = left;
+    const num = left;
     const divTo = divMod(num);
     divTo.sort();
     if (divTo[0] !== 0) {
