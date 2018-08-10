@@ -7,6 +7,7 @@ var fibNum = (num, sequence = true) => {
   if (typeof (num) !== 'number') {
     throw new Error('not a number');
   }
+  // first 2 fib sequence is 1
   if (num <= 2) {
     return 1;
   }
