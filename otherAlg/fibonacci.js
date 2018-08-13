@@ -17,6 +17,7 @@ var fibNum = (num, sequence = true) => {
     fibSequence.push(nextFib);
     stack1.push(fibSequence[i + 1]);
   }
+  //sequence means if you wnat to return the whole sequence or just the nth fib number
   if (sequence) {
     return fibSequence;
   } else {
